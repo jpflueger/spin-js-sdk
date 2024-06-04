@@ -1,0 +1,15 @@
+manifest_version = "1"
+id = "amqp-ts"
+description = "AMQP message handler using Typescript"
+
+[add_component]
+skip_files = ["spin.toml"]
+[add_component.snippets]
+component = "component.txt"
+
+[parameters]
+project-description = { type = "string", prompt = "Description", default = "" }
+address = { type = "string", prompt = "AMQP address", default = "amqp://localhost:5672" }
+username = { type = "string", prompt = "AMQP user name", default = "user" }
+password = { type = "string", prompt = "AMQP user password", default = "password" }
+queue = { type = "string", prompt = "AMQP queue", default = "" }

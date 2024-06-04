@@ -1,0 +1,48 @@
+// WIT design guidelines https://github.com/WebAssembly/component-model/blob/main/design/mvp/WIT.md
+// https://component-model.bytecodealliance.org/design/wit.html
+package spin:amqp-trigger;
+
+interface spin-amqp-types {
+  /// General purpose error.
+  variant error {
+      other(string),
+  }
+
+  record properties {
+    content-type: option<string>,
+    content-encoding: option<string>,
+    headers: option<list<tuple<string, string>>>,
+    delivery-mode: option<u8>,
+    priority: option<u8>,
+    correlation-id: option<string>,
+    reply-to: option<string>,
+    expiration: option<string>,
+    message-id: option<string>,
+    timestamp: option<string>,
+    kind: option<string>,
+    user-id: option<string>,
+    app-id: option<string>,
+    cluster-id: option<string>
+  }
+
+  /// A message with a binary payload, a format specification, and decorative metadata.
+  record message {
+      tag: u64,
+      exchange: string,
+      routing-key: string,
+      redelivered: bool,
+      properties: option<properties>,
+      data: list<u8>
+  }
+}
+
+world spin-amqp {
+  use spin-amqp-types.{error, message};
+
+  /// Whenever this guest receives a message in one of the subscribed channels, the message is sent to this handler
+  export handler: func(ms: message) -> result<_, error>;
+}
+
+world spin-amqp-sdk {
+  import spin-amqp-types;
+}

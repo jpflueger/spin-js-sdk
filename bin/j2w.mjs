@@ -10,7 +10,10 @@ import path from 'path';
 const __filename = new URL(import.meta.url).pathname;
 const __dirname = __filename.substring(0, __filename.lastIndexOf('/'));
 
-const validSpinWorlds = ['spin-http'];
+const validSpinWorlds = [
+    'spin-http',
+    'spin-amqp',
+];
 
 const args = yargs(hideBin(process.argv))
     .option('input', {

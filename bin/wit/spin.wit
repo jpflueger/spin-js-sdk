@@ -22,7 +22,13 @@ world spin-http {
   export wasi:http/incoming-handler@0.2.0;
 }
 
+world spin-amqp {
+  include spin-imports;
+  include spin:amqp-trigger/spin-amqp;
+}
+
 world spin-all {
   include spin-redis;
   include spin-http;
+  include spin-amqp;
 }
